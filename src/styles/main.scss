@@ -1,0 +1,414 @@
+@use "base/colors-semantic";
+@use "base/colors-extended";
+@use "base/colors-brand";
+@use "base/decoration";
+@use "base/typography";
+@import url("./main.scss");
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: typography.$font-family-sans-serif;
+  background-color: colors-semantic.$color-background-layer-1;
+  color: colors-semantic.$color-foreground-default;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  @include typography.font-size-height-1;
+  font-weight: normal;
+}
+
+h2 {
+  @include typography.font-size-height-2;
+  font-weight: normal;
+}
+
+h3 {
+  @include typography.font-size-height-3;
+  font-weight: normal;
+}
+
+//white mode
+body {
+  color: black;
+  transition: all 0.5s ease-in-out;
+  background: colors-extended.$color-neutral-5;
+  .start-button {
+    padding: 15px 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: colors-brand.$color-brand-turquoise;
+    transition: all 0.5s ease-in-out;
+    div {
+      transition: all 0.5s ease-in-out;
+      &:nth-child(1) {
+        margin-left: 10px;
+      }
+    }
+    &:hover {
+      color: aliceblue;
+      background: colors-extended.$color-turquoise-60;
+    }
+  }
+  .menu-mobile {
+    height: 6rem;
+  }
+  .container {
+    .switch-theme {
+      right: 10px !important;
+      top: 15px !important;
+      color: colors-extended.$color-neutral-10;
+      transition: all 0.5s ease-in-out;
+      background-color: colors-brand.$color-brand-turquoise;
+      &:hover {
+        background-color: colors-extended.$color-turquoise-60;
+      }
+      cursor: pointer;
+    }
+
+    .content-mobile {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .graph {
+        margin-top: 70px;
+      }
+      .graph-toggle {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        .active {
+          background-color: colors-extended.$color-purple-50;
+        }
+        button {
+          min-width: 110px;
+          padding: 10px 20px;
+          border-radius: 10px;
+          background: colors-extended.$color-neutral-10;
+        }
+      }
+    }
+    .content {
+      overflow: hidden;
+      a {
+        img {
+          width: 150px;
+          &:nth-child(2) {
+            display: none;
+          }
+        }
+      }
+      .graph-data {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        .left-div {
+          border-radius: 10px;
+          background: colors-extended.$color-neutral-15;
+          width: 60px;
+          height: 100%; /* Prend toute la hauteur */
+          background-color: colors-extended.$color-neutral-15;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          justify-content: flex-end;
+          margin-left: 20px;
+          position: relative;
+
+          .value-labels {
+            padding: 20px 0;
+            font-size: 10px;
+            text-align: start;
+            color: #585b7d;
+            position: absolute;
+            left: 10px; /* Décalage vers la gauche pour éviter de toucher inner-div */
+            width: 100%;
+            display: flex;
+            flex-direction: column-reverse; /* Affichage inversé */
+            justify-content: space-between;
+            height: 100%;
+          }
+          .inner-container {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            .inner-div {
+              margin: 20px 10px 20px 0;
+              border-radius: 100vw;
+              height: 100%;
+              width: 15px;
+              transition: height 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+          }
+        }
+      }
+      height: 100%;
+      .global {
+        background-color: colors-extended.$color-neutral-90;
+        .container {
+          height: 100%;
+          .menu {
+            height: 70px;
+            display: nonde;
+          }
+        }
+      }
+      .visualizer-container {
+        background: colors-extended.$color-neutral-80;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        canva {
+          height: 100%;
+        }
+      }
+      #volume-section {
+        background: colors-extended.$color-neutral-10;
+      }
+      #music-section {
+        background: colors-extended.$color-neutral-10;
+        display: flex;
+        .music-controls {
+          .buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: colors-extended.$color-neutral-10;
+            img {
+              display: none;
+            }
+            button {
+              transition: all 0.5s ease-in-out;
+              cursor: pointer;
+              height: 50px;
+              width: 50px;
+              border-radius: 100vw;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: colors-extended.$color-neutral-70;
+              transition: 0.5s all ease-in-out;
+              &:hover {
+                background: colors-extended.$color-neutral-50;
+              }
+              &:nth-child(2) {
+                background: colors-extended.$color-purple-40;
+                height: 65px;
+                width: 65px;
+                &:hover {
+                  background: colors-extended.$color-purple-60;
+                }
+              }
+            }
+          }
+        }
+        .title {
+          color: colors-extended.$color-neutral-40;
+        }
+        .progressBar {
+          .text-span {
+            color: colors-extended.$color-neutral-40;
+          }
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+          background-color: colors-brand.$color-brand-turquoise;
+          border-radius: 20px;
+          height: 15px;
+        }
+        .buttons {
+          color: colors-extended.$color-neutral-10;
+          background: colors-extended.$color-neutral-80;
+        }
+      }
+      #lufs-section {
+        background: colors-extended.$color-neutral-10;
+        .lufs-graphic {
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+//dark mode
+.dark body {
+  .content {
+    .graph-data {
+      .left-div {
+        background-color: colors-extended.$color-neutral-70 !important;
+      }
+    }
+  }
+  background-color: colors-semantic.$color-background-layer-1;
+  color: white;
+  .global {
+    background: colors-extended.$color-neutral-80 !important;
+  }
+  .menu {
+    a {
+      img {
+        display: block !important;
+        &:nth-child(1) {
+          display: none !important;
+        }
+      }
+    }
+  }
+  .switch-theme {
+    color: colors-extended.$color-neutral-10;
+    background-color: colors-extended.$color-purple-40;
+    &:hover {
+      background-color: colors-extended.$color-purple-60;
+    }
+  }
+  .graph-toggle {
+    .active {
+      background-color: colors-brand.$color-brand-turquoise !important;
+    }
+    button {
+      background: colors-extended.$color-neutral-70 !important;
+    }
+  }
+  .start-button {
+    background: colors-extended.$color-neutral-80;
+  }
+  #music-section {
+    background-color: colors-extended.$color-neutral-80 !important;
+    .music-controls {
+      .buttons {
+        background: colors-extended.$color-neutral-80 !important;
+        button {
+          background-color: colors-extended.$color-neutral-70 !important;
+          &:hover {
+            background: colors-extended.$color-neutral-50 !important;
+          }
+          &:nth-child(2) {
+            background-color: colors-extended.$color-purple-40 !important;
+            &:hover {
+              background-color: colors-extended.$color-purple-60 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  #volume-section {
+    background: colors-extended.$color-neutral-80 !important;
+  }
+  #lufs-section {
+    background: colors-extended.$color-neutral-80 !important;
+  }
+  .bottom {
+    background: colors-extended.$color-neutral-80 !important;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .graph {
+    height: 50vh;
+
+    .container {
+      height: 90%;
+      display: flex;
+      align-items: center;
+      background: colors-extended.$color-neutral-80;
+      border-radius: 10px;
+    }
+  }
+  .visualizer-container {
+    margin: 0;
+    height: 100% !important;
+    canvas {
+      height: 80% !important;
+      width: 80% !important;
+    }
+  }
+  .bottom {
+    background: colors-extended.$color-neutral-10;
+    img {
+      display: none;
+    }
+    p {
+      color: colors-extended.$color-neutral-50;
+    }
+    button {
+      border-radius: 100vw !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: colors-extended.$color-neutral-70 !important;
+      height: 50px;
+      width: 50px;
+      &:nth-child(2) {
+        background: colors-brand.$color-brand-turquoise !important;
+        height: 65px;
+        width: 65px;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        background-color: colors-brand.$color-brand-turquoise;
+        border-radius: 20px;
+        height: 15px;
+      }
+    }
+  }
+  .graph-data {
+    flex-direction: row !important;
+    align-items: center !important;
+    .left-div {
+      height: 40% !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 18px !important;
+      .value-labels {
+        display: none !important;
+      }
+      .inner-container {
+        width: 100% !important;
+
+        .inner-div {
+          width: 10px !important;
+          padding: 0;
+          margin: 0 !important;
+        }
+      }
+    }
+    .chart-container {
+      width: 80%;
+    }
+  }
+}
+@media screen and (min-width: 600px) {
+  #global {
+    .menu {
+      display: block;
+    }
+  }
+  .music-controls {
+    img {
+      display: block !important;
+    }
+  }
+}
