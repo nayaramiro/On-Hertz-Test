@@ -138,10 +138,20 @@ const rmsHeight = ref(0);
 watch(
   () => props.rms,
   (newRms) => {
-    const usableHeight = leftDivHeight.value - 13;
-    rmsHeight.value = (newRms / 30) * usableHeight;
+    const maxValue = 30; // Valeur max du graphique
+    const graphHeight = leftDivHeight.value; // Hauteur réelle du graph
+
+    // Calcul de la hauteur en pixels
+    rmsHeight.value = (newRms / maxValue) * graphHeight;
+
+    // Empêcher le dépassement
+    if (rmsHeight.value > graphHeight) {
+      rmsHeight.value = graphHeight;
+    }
   }
 );
+
+
 
 const zoomIn = () => {
   zoomStart.value = Math.min(zoomStart.value + 10, 90);

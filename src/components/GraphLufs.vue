@@ -153,18 +153,34 @@ onMounted(() => {
 watch(
   () => props.instantLUFS,
   (newInstantLUFS) => {
-    const positiveLUFS = Math.max(0, Math.min(30, newInstantLUFS));
+    const maxValue = 30; // Valeur max du graphique LUFS
+    const graphHeight = leftDivHeight.value - 40; // Hauteur réelle du graphe (moins un padding)
+    const bottomPadding = 5; // Petite marge pour éviter l'overflow
 
+    // Sécurisation de la valeur LUFS pour éviter les valeurs hors limites
+    const positiveLUFS = Math.max(0, Math.min(maxValue, newInstantLUFS));
+
+    // Ajout des valeurs au graphique
     lufsValues.value.push(positiveLUFS);
     categories.value.push(`${props.progress.toFixed(2)}s`);
 
     chartOptions.value.xAxis.data = [...categories.value];
     chartOptions.value.series[0].data = [...lufsValues.value];
 
-    const usableHeight = leftDivHeight.value - 40;
-    lufsHeight.value = (positiveLUFS / 30) * usableHeight;
+    // Calcul précis de la hauteur de inner-div
+    lufsHeight.value = ((positiveLUFS / maxValue) * graphHeight) / 1.7;
+
+
+    // Empêcher inner-div de dépasser
+    lufsHeight.value = Math.min(lufsHeight.value, graphHeight - bottomPadding);
+
+    console.log(
+      `LUFS: ${positiveLUFS}, Height: ${lufsHeight.value}px (Graph height: ${graphHeight}px)`
+    );
   }
 );
+
+
 
 const valueLabels = [0, 5, 10, 15, 20, 25, 30];
 </script>
